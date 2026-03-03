@@ -1,0 +1,30 @@
+{
+  "id": "example-001",
+  "placeId": "ChIJExample123",
+  "name": "Mike's Plumbing & Drain",
+  "phone": "(555) 123-4567",
+  "address": "1234 Main St",
+  "city": "Denver",
+  "state": "CO",
+  "zip": "80202",
+  "industry": "plumber",
+  "services": [
+    "Emergency Plumbing Repair",
+    "Drain Cleaning & Unclogging",
+    "Water Heater Installation"
+  ],
+  "hours": {
+    "monday": { "open": "8:00 AM", "close": "5:00 PM" },
+    "tuesday": { "open": "8:00 AM", "close": "5:00 PM" },
+    "wednesday": { "open": "8:00 AM", "close": "5:00 PM" },
+    "thursday": { "open": "8:00 AM", "close": "5:00 PM" },
+    "friday": { "open": "8:00 AM", "close": "5:00 PM" },
+    "saturday": { "open": "9:00 AM", "close": "2:00 PM" },
+    "sunday": null
+  },
+  "rating": 4.7,
+  "reviewCount": 42,
+  "status": "lead",
+  "foundAt": "2026-03-03T00:00:00Z",
+  "updatedAt": "2026-03-03T00:00:00Z"
+}

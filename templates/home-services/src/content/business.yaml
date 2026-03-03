@@ -1,0 +1,48 @@
+# Business data - populated by the site generator
+# These values are replaced with real business data during generation
+
+name: "{{business_name}}"
+tagline: "{{tagline}}"
+phone: "{{phone}}"
+email: "{{email}}"
+address: "{{address}}"
+city: "{{city}}"
+state: "{{state}}"
+zip: "{{zip}}"
+industry: "{{industry}}"
+
+# Trust signals
+yearsInBusiness: "{{years_in_business}}"
+licensed: true
+insured: true
+bonded: true
+
+# Services offered
+services:
+  - name: "{{service_1_name}}"
+    description: "{{service_1_description}}"
+  - name: "{{service_2_name}}"
+    description: "{{service_2_description}}"
+  - name: "{{service_3_name}}"
+    description: "{{service_3_description}}"
+
+# Business hours
+hours:
+  monday: { open: "8:00 AM", close: "5:00 PM" }
+  tuesday: { open: "8:00 AM", close: "5:00 PM" }
+  wednesday: { open: "8:00 AM", close: "5:00 PM" }
+  thursday: { open: "8:00 AM", close: "5:00 PM" }
+  friday: { open: "8:00 AM", close: "5:00 PM" }
+  saturday: { open: "9:00 AM", close: "2:00 PM" }
+  sunday: closed
+
+# Social proof
+rating: "{{rating}}"
+reviewCount: "{{review_count}}"
+testimonials:
+  - author: "{{testimonial_1_author}}"
+    text: "{{testimonial_1_text}}"
+    rating: 5
+  - author: "{{testimonial_2_author}}"
+    text: "{{testimonial_2_text}}"
+    rating: 5

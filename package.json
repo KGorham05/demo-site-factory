@@ -1,0 +1,25 @@
+{
+  "name": "demo-site-factory",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Automated demo site factory for local businesses without websites",
+  "type": "module",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "find-leads": "pnpm --filter @demo-site-factory/lead-finder start",
+    "generate-site": "pnpm --filter @demo-site-factory/site-generator start",
+    "prepare": "lefthook install"
+  },
+  "engines": {
+    "node": ">=22.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "packageManager": "pnpm@9.15.4",
+  "author": "Kevin Gorham",
+  "license": "UNLICENSED"
+}

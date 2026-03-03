@@ -1,0 +1,9 @@
+{
+  "name": "@demo-site-factory/types",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Shared TypeScript types for Demo Site Factory",
+  "main": "index.ts",
+  "types": "index.ts"
+}

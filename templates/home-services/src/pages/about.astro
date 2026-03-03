@@ -1,0 +1,64 @@
+---
+import BaseLayout from "../layouts/base-layout.astro";
+---
+
+<BaseLayout title="About - {{business_name}}">
+  <main>
+    <section class="bg-blue-900 py-16 text-white">
+      <div class="mx-auto max-w-5xl px-6 text-center">
+        <h1 class="text-4xl font-bold">About Us</h1>
+        <p class="mt-4 text-lg text-blue-200">
+          Trusted {{industry}} professionals in {{city}}, {{state}}
+        </p>
+      </div>
+    </section>
+
+    <section class="py-16">
+      <div class="mx-auto max-w-3xl px-6">
+        <h2 class="mb-6 text-3xl font-bold">Our Story</h2>
+        <p class="mb-4 text-lg text-gray-600">
+          {{business_name}} has been proudly serving {{city}} and the surrounding areas
+          for over {{years_in_business}} years. We are committed to providing top-quality
+          {{industry}} services with honesty, integrity, and craftsmanship.
+        </p>
+        <p class="mb-4 text-lg text-gray-600">
+          As a fully licensed, insured, and bonded company, we stand behind every
+          job we complete. Our team of experienced professionals treats every home
+          like their own.
+        </p>
+      </div>
+    </section>
+
+    <section class="bg-gray-50 py-16">
+      <div class="mx-auto max-w-5xl px-6">
+        <h2 class="mb-10 text-center text-3xl font-bold">Why Choose Us</h2>
+        <div class="grid gap-8 md:grid-cols-2">
+          <div class="rounded-lg bg-white p-6 shadow-sm">
+            <h3 class="mb-2 text-xl font-semibold">Experienced Team</h3>
+            <p class="text-gray-600">
+              Our technicians are fully trained, certified, and background-checked.
+            </p>
+          </div>
+          <div class="rounded-lg bg-white p-6 shadow-sm">
+            <h3 class="mb-2 text-xl font-semibold">Transparent Pricing</h3>
+            <p class="text-gray-600">
+              No hidden fees or surprises. We provide upfront estimates before any work begins.
+            </p>
+          </div>
+          <div class="rounded-lg bg-white p-6 shadow-sm">
+            <h3 class="mb-2 text-xl font-semibold">Satisfaction Guaranteed</h3>
+            <p class="text-gray-600">
+              We're not happy until you're happy. We stand behind our work 100%.
+            </p>
+          </div>
+          <div class="rounded-lg bg-white p-6 shadow-sm">
+            <h3 class="mb-2 text-xl font-semibold">Locally Owned</h3>
+            <p class="text-gray-600">
+              We live and work in this community. Your neighbors are our neighbors.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

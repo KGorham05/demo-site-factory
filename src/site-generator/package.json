@@ -1,0 +1,26 @@
+{
+  "name": "@demo-site-factory/site-generator",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "CLI tool to generate demo sites from templates and business data",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "tsx src/index.ts",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "commander": "^14.0.0",
+    "fs-extra": "^11.2.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.0",
+    "tsx": "^4.19.0",
+    "vitest": "^3.0.0",
+    "@types/fs-extra": "^11.0.0",
+    "@types/node": "^22.0.0"
+  }
+}
