@@ -78,18 +78,23 @@ program
           process.exit(1);
         }
 
+        // Resolve Stripe Payment Links: CLI flags > env vars (based on STRIPE_MODE) > fallback
+        const stripeMode = process.env.STRIPE_MODE === "live" ? "LIVE" : "TEST";
+        const envUrl = (key: string): string | undefined =>
+          process.env[`STRIPE_${stripeMode}_URL_${key}`];
+
         const extras: HydrationExtras = {
           ownerEmail: options.ownerEmail,
           ownerPhone: options.ownerPhone,
+          purchaseUrls: {
+            standard: options.purchaseUrlStandard ?? envUrl("STANDARD") ?? "#pricing",
+            standardDomain:
+              options.purchaseUrlStandardDomain ?? envUrl("STANDARD_DOMAIN") ?? "#pricing",
+            premium: options.purchaseUrlPremium ?? envUrl("PREMIUM") ?? "#pricing",
+            premiumDomain:
+              options.purchaseUrlPremiumDomain ?? envUrl("PREMIUM_DOMAIN") ?? "#pricing",
+          },
         };
-        if (options.purchaseUrlStandard || options.purchaseUrlPremium) {
-          extras.purchaseUrls = {
-            standard: options.purchaseUrlStandard ?? "#pricing",
-            standardDomain: options.purchaseUrlStandardDomain ?? "#pricing",
-            premium: options.purchaseUrlPremium ?? "#pricing",
-            premiumDomain: options.purchaseUrlPremiumDomain ?? "#pricing",
-          };
-        }
 
         console.log(`Generating site for: ${lead.name}`);
         console.log(`  Template: ${options.template}`);
