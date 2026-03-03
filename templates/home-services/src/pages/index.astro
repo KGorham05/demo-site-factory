@@ -6,16 +6,20 @@ import BaseLayout from "../layouts/base-layout.astro";
   <main>
     <!-- ==================== HERO SECTION ==================== -->
     <section class="relative overflow-hidden bg-navy">
-      <!-- Gradient overlay for visual depth -->
-      <div class="absolute inset-0 bg-gradient-to-br from-navy via-navy-light to-navy opacity-90"></div>
-      <!-- Decorative circles -->
-      <div class="absolute -right-20 -top-20 h-80 w-80 rounded-full bg-copper/5"></div>
-      <div class="absolute -bottom-40 -left-20 h-96 w-96 rounded-full bg-copper/5"></div>
+      <!-- Background hero image -->
+      <img
+        src="/images/hero.jpg"
+        alt=""
+        class="absolute inset-0 h-full w-full object-cover"
+        loading="eager"
+      />
+      <!-- Dark gradient overlay -->
+      <div class="absolute inset-0 bg-gradient-to-r from-navy/95 via-navy/80 to-navy/50"></div>
 
       <div class="relative mx-auto max-w-7xl px-6 pb-20 pt-24 md:pb-28 md:pt-32">
         <!-- Emergency Badge -->
         <div class="mb-8">
-          <span class="inline-flex items-center gap-2 rounded-full border border-copper/40 bg-copper/10 px-4 py-1.5 text-sm font-medium text-copper">
+          <span class="inline-flex items-center gap-2 rounded-full border border-copper/40 bg-copper/10 px-4 py-1.5 text-sm font-medium text-copper backdrop-blur-sm">
             <span class="h-2 w-2 rounded-full bg-copper"></span>
             24/7 Emergency Service Available
           </span>

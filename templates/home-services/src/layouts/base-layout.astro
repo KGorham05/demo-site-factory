@@ -1,14 +1,16 @@
 ---
 import "../styles/global.css";
+import DemoBanner from "../components/demo-banner.astro";
 import Header from "../components/header.astro";
 import Footer from "../components/footer.astro";
 
 interface Props {
   title: string;
   description?: string;
+  hideDemoBanner?: boolean;
 }
 
-const { title, description = "Professional home services you can trust." } = Astro.props;
+const { title, description = "Professional home services you can trust.", hideDemoBanner = false } = Astro.props;
 ---
 
 <!doctype html>
@@ -21,6 +23,7 @@ const { title, description = "Professional home services you can trust." } = Ast
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
   <body class="min-h-screen bg-white text-gray-900 antialiased">
+    {!hideDemoBanner && <DemoBanner />}
     <Header />
     <slot />
     <Footer />

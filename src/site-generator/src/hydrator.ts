@@ -13,6 +13,13 @@ import type { BusinessLead } from "@demo-site-factory/types";
 import { formatIndustryName, generateTagline, getIndustryDefaults } from "./industry-defaults.js";
 import { slugify } from "./slug.js";
 
+/** Extra data for purchase URLs and owner contact info */
+export interface HydrationExtras {
+  purchaseUrls?: { standard: string; premium: string };
+  ownerEmail?: string;
+  ownerPhone?: string;
+}
+
 /** File extensions that should be scanned for placeholder replacement */
 const REPLACEABLE_EXTENSIONS = new Set([
   ".astro",
@@ -40,7 +47,10 @@ const SKIP_DIRS = new Set(["node_modules", ".git", "dist", ".astro"]);
 /**
  * Build the full placeholder -> value mapping for a given business lead.
  */
-export function buildPlaceholderMap(lead: BusinessLead): Record<string, string> {
+export function buildPlaceholderMap(
+  lead: BusinessLead,
+  extras?: HydrationExtras,
+): Record<string, string> {
   const defaults = getIndustryDefaults(lead.industry);
   const emailSlug = slugify(lead.name);
 
@@ -70,6 +80,10 @@ export function buildPlaceholderMap(lead: BusinessLead): Record<string, string> 
     stats_jobs: "1K+",
     rating: String(lead.rating ?? 4.8),
     review_count: String(lead.reviewCount ?? 50),
+    purchase_url_standard: extras?.purchaseUrls?.standard ?? "#pricing",
+    purchase_url_premium: extras?.purchaseUrls?.premium ?? "#pricing",
+    owner_email: extras?.ownerEmail ?? "kevin@example.com",
+    owner_phone: extras?.ownerPhone ?? "",
   };
 
   // Service placeholders: service_1_name, service_1_description, etc.
@@ -164,6 +178,10 @@ export interface HydrateOptions {
   templateDir: string;
   /** Path to the output directory */
   outputDir: string;
+  /** Path to the industry assets directory (defaults to project root assets/industry-images) */
+  industryAssetsDir?: string;
+  /** Extra data for purchase URLs and owner contact info */
+  extras?: HydrationExtras;
 }
 
 export interface HydrateResult {
@@ -178,16 +196,47 @@ export interface HydrateResult {
 }
 
 /**
+ * Resolve the default industry assets directory from the project root.
+ */
+function resolveDefaultAssetsDir(): string {
+  // Navigate from src/site-generator/src/ up to project root
+  return path.resolve(import.meta.dirname, "..", "..", "..", "assets", "industry-images");
+}
+
+/**
+ * Copy industry-specific assets (e.g. hero images) into the output site's public/images/ directory.
+ * Gracefully skips if no assets directory exists for the given industry.
+ */
+export async function copyIndustryAssets(
+  industry: string,
+  outputDir: string,
+  assetsDir?: string,
+): Promise<boolean> {
+  const resolvedAssetsDir = assetsDir ?? resolveDefaultAssetsDir();
+  const industryDir = path.join(resolvedAssetsDir, industry);
+
+  if (!(await fs.pathExists(industryDir))) {
+    return false;
+  }
+
+  const targetDir = path.join(outputDir, "public", "images");
+  await fs.ensureDir(targetDir);
+  await fs.copy(industryDir, targetDir, { overwrite: true });
+  return true;
+}
+
+/**
  * Hydrate a template with business data.
  *
  * 1. Copies all files from templateDir to outputDir
- * 2. Scans all text files for {{placeholder}} tokens
- * 3. Replaces tokens with real business data
+ * 2. Copies industry-specific assets (hero images) into public/images/
+ * 3. Scans all text files for {{placeholder}} tokens
+ * 4. Replaces tokens with real business data
  *
  * Returns information about the hydration result.
  */
 export async function hydrate(options: HydrateOptions): Promise<HydrateResult> {
-  const { lead, templateDir, outputDir } = options;
+  const { lead, templateDir, outputDir, industryAssetsDir, extras } = options;
 
   const resolvedTemplate = path.resolve(templateDir);
   const resolvedOutput = path.resolve(outputDir);
@@ -207,8 +256,11 @@ export async function hydrate(options: HydrateOptions): Promise<HydrateResult> {
     },
   });
 
+  // Copy industry-specific assets (hero images, etc.)
+  await copyIndustryAssets(lead.industry, resolvedOutput, industryAssetsDir);
+
   // Build placeholder map
-  const placeholderMap = buildPlaceholderMap(lead);
+  const placeholderMap = buildPlaceholderMap(lead, extras);
 
   // Collect all files in the output directory
   const allFiles = await collectFiles(resolvedOutput);

@@ -5,7 +5,13 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
 import type { BusinessLead } from "@demo-site-factory/types";
 
-import { buildPlaceholderMap, hydrate, replacePlaceholders } from "./hydrator.js";
+import type { HydrationExtras } from "./hydrator.js";
+import {
+  buildPlaceholderMap,
+  copyIndustryAssets,
+  hydrate,
+  replacePlaceholders,
+} from "./hydrator.js";
 import { formatIndustryName, generateTagline, getIndustryDefaults } from "./industry-defaults.js";
 import { slugify } from "./slug.js";
 
@@ -235,6 +241,30 @@ describe("buildPlaceholderMap", () => {
     const map = buildPlaceholderMap(leadNoPhone);
     expect(map.phone).toBe("");
   });
+
+  it("includes purchase URLs when extras are provided", () => {
+    const extras: HydrationExtras = {
+      purchaseUrls: {
+        standard: "https://buy.stripe.com/standard",
+        premium: "https://buy.stripe.com/premium",
+      },
+      ownerEmail: "owner@business.com",
+      ownerPhone: "(555) 999-0000",
+    };
+    const map = buildPlaceholderMap(sampleLead, extras);
+    expect(map.purchase_url_standard).toBe("https://buy.stripe.com/standard");
+    expect(map.purchase_url_premium).toBe("https://buy.stripe.com/premium");
+    expect(map.owner_email).toBe("owner@business.com");
+    expect(map.owner_phone).toBe("(555) 999-0000");
+  });
+
+  it("uses fallback defaults when extras are omitted", () => {
+    const map = buildPlaceholderMap(sampleLead);
+    expect(map.purchase_url_standard).toBe("#pricing");
+    expect(map.purchase_url_premium).toBe("#pricing");
+    expect(map.owner_email).toBe("kevin@example.com");
+    expect(map.owner_phone).toBe("");
+  });
 });
 
 // ---------------------------------------------------------------------------
@@ -334,5 +364,76 @@ describe("hydrate", () => {
         outputDir,
       }),
     ).rejects.toThrow("Template directory not found");
+  });
+
+  it("replaces purchase URL placeholders when extras are provided", async () => {
+    // Add a claim page template with purchase URL placeholders
+    await fs.writeFile(
+      path.join(templateDir, "src", "pages", "claim.astro"),
+      `<a href="{{purchase_url_standard}}">Standard</a>\n<a href="{{purchase_url_premium}}">Premium</a>\n<p>{{owner_email}}</p>`,
+    );
+
+    await hydrate({
+      lead: sampleLead,
+      templateDir,
+      outputDir,
+      extras: {
+        purchaseUrls: {
+          standard: "https://buy.stripe.com/standard",
+          premium: "https://buy.stripe.com/premium",
+        },
+        ownerEmail: "test@example.com",
+      },
+    });
+
+    const claimContent = await fs.readFile(
+      path.join(outputDir, "src", "pages", "claim.astro"),
+      "utf-8",
+    );
+    expect(claimContent).toContain("https://buy.stripe.com/standard");
+    expect(claimContent).toContain("https://buy.stripe.com/premium");
+    expect(claimContent).toContain("test@example.com");
+    expect(claimContent).not.toContain("{{purchase_url_standard}}");
+  });
+});
+
+// ---------------------------------------------------------------------------
+// copyIndustryAssets tests
+// ---------------------------------------------------------------------------
+
+describe("copyIndustryAssets", () => {
+  const testDir = path.join(process.cwd(), ".test-industry-assets-temp");
+  const assetsDir = path.join(testDir, "assets");
+  const outputDir = path.join(testDir, "output");
+
+  beforeEach(async () => {
+    await fs.ensureDir(assetsDir);
+    await fs.ensureDir(outputDir);
+  });
+
+  afterEach(async () => {
+    await fs.remove(testDir);
+  });
+
+  it("copies industry hero image to public/images/", async () => {
+    // Set up a fake industry assets directory with a hero image
+    const plumberDir = path.join(assetsDir, "plumber");
+    await fs.ensureDir(plumberDir);
+    await fs.writeFile(path.join(plumberDir, "hero.jpg"), Buffer.from([0xff, 0xd8, 0xff, 0xe0]));
+
+    const result = await copyIndustryAssets("plumber", outputDir, assetsDir);
+
+    expect(result).toBe(true);
+    const copiedImage = path.join(outputDir, "public", "images", "hero.jpg");
+    expect(await fs.pathExists(copiedImage)).toBe(true);
+    const content = await fs.readFile(copiedImage);
+    expect(content).toEqual(Buffer.from([0xff, 0xd8, 0xff, 0xe0]));
+  });
+
+  it("succeeds gracefully when no industry images exist", async () => {
+    const result = await copyIndustryAssets("nonexistent-industry", outputDir, assetsDir);
+
+    expect(result).toBe(false);
+    expect(await fs.pathExists(path.join(outputDir, "public", "images"))).toBe(false);
   });
 });

@@ -16,6 +16,7 @@ import { Command } from "commander";
 import { config } from "dotenv";
 import fs from "fs-extra";
 
+import type { HydrationExtras } from "./hydrator.js";
 import { hydrate } from "./hydrator.js";
 import { loadLead } from "./lead-loader.js";
 import { generateOutreachEmail } from "./outreach.js";
@@ -46,49 +47,75 @@ program
   .requiredOption("-b, --business <path>", "Path to business JSON file or lead ID")
   .option("-t, --template <name>", "Template to use", "home-services")
   .option("-o, --output <path>", "Output directory", path.join(repoRoot(), "generated"))
-  .action(async (options: { business: string; template: string; output: string }) => {
-    try {
-      const leadsDir = path.join(repoRoot(), "data", "leads");
-      const lead = await loadLead(options.business, leadsDir);
-      const slug = slugify(lead.name);
+  .option("--purchase-url-standard <url>", "Stripe checkout URL for Standard plan")
+  .option("--purchase-url-premium <url>", "Stripe checkout URL for Premium plan")
+  .option("--owner-email <email>", "Owner contact email", "kevin@example.com")
+  .option("--owner-phone <phone>", "Owner contact phone")
+  .action(
+    async (options: {
+      business: string;
+      template: string;
+      output: string;
+      purchaseUrlStandard?: string;
+      purchaseUrlPremium?: string;
+      ownerEmail: string;
+      ownerPhone?: string;
+    }) => {
+      try {
+        const leadsDir = path.join(repoRoot(), "data", "leads");
+        const lead = await loadLead(options.business, leadsDir);
+        const slug = slugify(lead.name);
 
-      const templateDir = path.join(repoRoot(), "templates", options.template);
-      const outputDir = path.join(options.output, slug);
+        const templateDir = path.join(repoRoot(), "templates", options.template);
+        const outputDir = path.join(options.output, slug);
 
-      if (!(await fs.pathExists(templateDir))) {
-        console.error(`Template not found: ${templateDir}`);
+        if (!(await fs.pathExists(templateDir))) {
+          console.error(`Template not found: ${templateDir}`);
+          process.exit(1);
+        }
+
+        const extras: HydrationExtras = {
+          ownerEmail: options.ownerEmail,
+          ownerPhone: options.ownerPhone,
+        };
+        if (options.purchaseUrlStandard || options.purchaseUrlPremium) {
+          extras.purchaseUrls = {
+            standard: options.purchaseUrlStandard ?? "#pricing",
+            premium: options.purchaseUrlPremium ?? "#pricing",
+          };
+        }
+
+        console.log(`Generating site for: ${lead.name}`);
+        console.log(`  Template: ${options.template}`);
+        console.log(`  Output:   ${outputDir}`);
+
+        const result = await hydrate({
+          lead,
+          templateDir,
+          outputDir,
+          extras,
+        });
+
+        console.log(`\nInstalling dependencies...`);
+        execSync("npm install --silent", {
+          cwd: result.outputDir,
+          stdio: "pipe",
+        });
+
+        console.log(`\nSite generated successfully!`);
+        console.log(`  Directory:       ${result.outputDir}`);
+        console.log(`  Files processed: ${result.filesProcessed}`);
+        console.log(`  Files copied:    ${result.filesCopied}`);
+        console.log(`  Slug:            ${result.slug}`);
+        console.log(`\nNext steps:`);
+        console.log(`  1. cd ${result.outputDir}`);
+        console.log(`  2. npm run dev`);
+      } catch (error) {
+        console.error(`Error: ${error instanceof Error ? error.message : String(error)}`);
         process.exit(1);
       }
-
-      console.log(`Generating site for: ${lead.name}`);
-      console.log(`  Template: ${options.template}`);
-      console.log(`  Output:   ${outputDir}`);
-
-      const result = await hydrate({
-        lead,
-        templateDir,
-        outputDir,
-      });
-
-      console.log(`\nInstalling dependencies...`);
-      execSync("npm install --silent", {
-        cwd: result.outputDir,
-        stdio: "pipe",
-      });
-
-      console.log(`\nSite generated successfully!`);
-      console.log(`  Directory:       ${result.outputDir}`);
-      console.log(`  Files processed: ${result.filesProcessed}`);
-      console.log(`  Files copied:    ${result.filesCopied}`);
-      console.log(`  Slug:            ${result.slug}`);
-      console.log(`\nNext steps:`);
-      console.log(`  1. cd ${result.outputDir}`);
-      console.log(`  2. npm run dev`);
-    } catch (error) {
-      console.error(`Error: ${error instanceof Error ? error.message : String(error)}`);
-      process.exit(1);
-    }
-  });
+    },
+  );
 
 program
   .command("build")

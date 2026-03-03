@@ -1,0 +1,50 @@
+---
+/**
+ * Sticky demo banner shown on all pages except /claim.
+ * Visually distinct from the business's navy/copper brand (emerald-to-blue gradient).
+ * Sets a CSS variable so the header knows its offset.
+ */
+---
+
+<!-- Sticky top banner -->
+<div id="demo-banner" class="sticky top-0 z-[60] flex items-center justify-between bg-gradient-to-r from-emerald-600 to-blue-600 px-4 py-2.5 text-white shadow-md sm:px-6">
+  <p class="text-xs font-medium sm:text-sm">
+    This is a preview of your custom website
+  </p>
+  <a
+    href="/claim"
+    class="hidden rounded-full bg-white px-5 py-1.5 text-xs font-bold text-emerald-700 transition hover:bg-gray-100 sm:inline-block"
+  >
+    Make This Site Yours
+  </a>
+  <!-- Mobile: compact button -->
+  <a
+    href="/claim"
+    class="rounded-full bg-white px-3 py-1 text-xs font-bold text-emerald-700 transition hover:bg-gray-100 sm:hidden"
+  >
+    Claim
+  </a>
+</div>
+
+<!-- Mobile floating action button (persistent CTA while scrolling) -->
+<a
+  id="demo-fab"
+  href="/claim"
+  class="fixed bottom-5 right-5 z-[60] flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-600 to-blue-600 px-5 py-3 text-sm font-bold text-white shadow-xl transition hover:shadow-2xl sm:hidden"
+>
+  <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+  </svg>
+  Make It Yours
+</a>
+
+<script>
+  // Set CSS variable so the header can offset below the banner
+  document.addEventListener("astro:page-load", () => {
+    const banner = document.getElementById("demo-banner");
+    if (banner) {
+      const height = banner.offsetHeight;
+      document.documentElement.style.setProperty("--demo-banner-height", `${height}px`);
+    }
+  });
+</script>

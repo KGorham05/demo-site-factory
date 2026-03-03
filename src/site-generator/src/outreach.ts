@@ -166,10 +166,11 @@ export function generateOutreachEmail(
 
   const industry = formatIndustryName(lead.industry);
 
-  // Build the optional purchase block
+  // Build the purchase block — always include the claim page link
+  const claimUrl = `${demoUrl}/claim`;
   const purchaseBlock = purchaseUrl
     ? `\n\nReady to get started? You can secure your site here: ${purchaseUrl}`
-    : "";
+    : `\n\nSee pricing and claim your site: ${claimUrl}`;
 
   const vars: Record<string, string> = {
     businessName: lead.name,
