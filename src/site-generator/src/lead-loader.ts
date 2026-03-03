@@ -66,9 +66,11 @@ export { BusinessLeadSchema };
 
 /**
  * Load a lead from a JSON file path.
+ * If the file contains an array of leads, returns the first one.
+ * Use loadLeadFromFileById to pick a specific lead from an array.
  * Throws if the file does not exist or fails validation.
  */
-export async function loadLeadFromFile(filePath: string): Promise<BusinessLead> {
+export async function loadLeadFromFile(filePath: string, leadId?: string): Promise<BusinessLead> {
   const absolutePath = path.resolve(filePath);
 
   if (!(await fs.pathExists(absolutePath))) {
@@ -76,6 +78,29 @@ export async function loadLeadFromFile(filePath: string): Promise<BusinessLead> 
   }
 
   const raw = await fs.readJson(absolutePath);
+
+  // Handle arrays of leads
+  if (Array.isArray(raw)) {
+    const target = leadId ? raw.find((r) => r.id === leadId) : raw[0];
+
+    if (!target) {
+      throw new Error(
+        leadId
+          ? `No lead with ID "${leadId}" found in ${absolutePath}`
+          : `No leads found in ${absolutePath}`,
+      );
+    }
+
+    const result = BusinessLeadSchema.safeParse(target);
+    if (!result.success) {
+      const issues = result.error.issues
+        .map((i) => `  - ${i.path.join(".")}: ${i.message}`)
+        .join("\n");
+      throw new Error(`Invalid lead data in ${absolutePath}:\n${issues}`);
+    }
+    return result.data;
+  }
+
   const result = BusinessLeadSchema.safeParse(raw);
 
   if (!result.success) {
@@ -106,10 +131,14 @@ export async function loadLeadById(leadId: string, leadsDir: string): Promise<Bu
     const filePath = path.join(absoluteDir, file);
     try {
       const raw = await fs.readJson(filePath);
-      if (raw.id === leadId) {
-        const result = BusinessLeadSchema.safeParse(raw);
-        if (result.success) {
-          return result.data;
+      const entries = Array.isArray(raw) ? raw : [raw];
+
+      for (const entry of entries) {
+        if (entry.id === leadId) {
+          const result = BusinessLeadSchema.safeParse(entry);
+          if (result.success) {
+            return result.data;
+          }
         }
       }
     } catch {

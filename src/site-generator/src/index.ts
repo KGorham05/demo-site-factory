@@ -70,6 +70,12 @@ program
         outputDir,
       });
 
+      console.log(`\nInstalling dependencies...`);
+      execSync("npm install --silent", {
+        cwd: result.outputDir,
+        stdio: "pipe",
+      });
+
       console.log(`\nSite generated successfully!`);
       console.log(`  Directory:       ${result.outputDir}`);
       console.log(`  Files processed: ${result.filesProcessed}`);
@@ -77,8 +83,7 @@ program
       console.log(`  Slug:            ${result.slug}`);
       console.log(`\nNext steps:`);
       console.log(`  1. cd ${result.outputDir}`);
-      console.log(`  2. pnpm install`);
-      console.log(`  3. pnpm dev`);
+      console.log(`  2. npm run dev`);
     } catch (error) {
       console.error(`Error: ${error instanceof Error ? error.message : String(error)}`);
       process.exit(1);

@@ -6,8 +6,8 @@ import { searchPlaces, PlacesApiError } from "./google-places.js";
 import { mapPlacesToLeads } from "./lead-mapper.js";
 import { saveLeads, listLeadFiles } from "./storage.js";
 
-// Load .env from project root (two levels up from src/lead-finder)
-config({ path: resolve(import.meta.dirname, "../../.env") });
+// Load .env from project root (three levels up from src/lead-finder/src/)
+config({ path: resolve(import.meta.dirname, "../../../.env") });
 
 const VALID_INDUSTRIES: Industry[] = [
   "plumber",
