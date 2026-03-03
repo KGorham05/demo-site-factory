@@ -5,6 +5,7 @@
  *   generate  - Generate a demo site from a template and business lead data
  *   build     - Run `astro build` in a generated site directory
  *   preview   - Run `astro preview` in a generated site directory
+ *   outreach  - Generate an outreach email for a business lead
  */
 
 import { execSync } from "node:child_process";
@@ -12,14 +13,20 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { Command } from "commander";
+import { config } from "dotenv";
 import fs from "fs-extra";
 
 import { hydrate } from "./hydrator.js";
 import { loadLead } from "./lead-loader.js";
+import { generateOutreachEmail } from "./outreach.js";
 import { slugify } from "./slug.js";
+import { deployToVercel, setCustomDomain, VercelDeployError } from "./vercel.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Load .env from project root (three levels up from src/site-generator/src/)
+config({ path: path.resolve(__dirname, "..", "..", "..", ".env") });
 
 /** Resolve a path relative to the monorepo root (two levels up from src/) */
 function repoRoot(): string {
@@ -145,5 +152,130 @@ program
       process.exit(1);
     }
   });
+
+program
+  .command("deploy")
+  .description("Deploy a generated demo site to Vercel")
+  .requiredOption("-s, --site <path>", "Path to generated site directory")
+  .option("-t, --token <token>", "Vercel API token (falls back to VERCEL_TOKEN env var)")
+  .option("--team <teamId>", "Vercel team ID (falls back to VERCEL_TEAM_ID env var)")
+  .option("-d, --domain <domain>", "Custom domain to assign after deployment")
+  .action(async (options: { site: string; token?: string; team?: string; domain?: string }) => {
+    try {
+      const sitePath = path.resolve(options.site);
+
+      if (!(await fs.pathExists(sitePath))) {
+        console.error(`Site directory not found: ${sitePath}`);
+        process.exit(1);
+      }
+
+      const packageJsonPath = path.join(sitePath, "package.json");
+      if (!(await fs.pathExists(packageJsonPath))) {
+        console.error(`No package.json found in ${sitePath}. Is this a valid site directory?`);
+        process.exit(1);
+      }
+
+      const token = options.token ?? process.env.VERCEL_TOKEN;
+      if (!token) {
+        console.error(
+          "Vercel token is required. Provide --token or set the VERCEL_TOKEN environment variable.",
+        );
+        process.exit(1);
+      }
+
+      const teamId = options.team ?? process.env.VERCEL_TEAM_ID;
+
+      console.log(`Deploying site at: ${sitePath}`);
+
+      const result = deployToVercel({
+        siteDir: sitePath,
+        token,
+        teamId,
+        projectName: path.basename(sitePath),
+      });
+
+      console.log(`\nDeployment successful!`);
+      console.log(`  URL: ${result.url}`);
+      console.log(`  Deployment ID: ${result.deploymentId}`);
+
+      if (options.domain) {
+        console.log(`\nSetting custom domain: ${options.domain}`);
+        await setCustomDomain(result.projectId, options.domain, token);
+        console.log(`  Domain configured: ${options.domain}`);
+      }
+    } catch (error) {
+      if (error instanceof VercelDeployError) {
+        console.error(`Vercel deploy error: ${error.message}`);
+        if (error.statusCode) {
+          console.error(`  HTTP status: ${error.statusCode}`);
+        }
+      } else {
+        console.error(`Error: ${error instanceof Error ? error.message : String(error)}`);
+      }
+      process.exit(1);
+    }
+  });
+
+program
+  .command("outreach")
+  .description("Generate an outreach email for a business lead")
+  .requiredOption("-b, --business <path>", "Path to business JSON or lead ID")
+  .option("-u, --demo-url <url>", "Demo site URL")
+  .option("-s, --stage <stage>", "Outreach stage: initial, follow-up, final", "initial")
+  .option("--sender <name>", "Sender name", "Kevin")
+  .option("--purchase-url <url>", "Stripe checkout URL")
+  .action(
+    async (options: {
+      business: string;
+      demoUrl?: string;
+      stage: string;
+      sender: string;
+      purchaseUrl?: string;
+    }) => {
+      try {
+        const leadsDir = path.join(repoRoot(), "data", "leads");
+        const lead = await loadLead(options.business, leadsDir);
+
+        // Use the lead's demoUrl if none was provided via CLI
+        const demoUrl = options.demoUrl ?? lead.demoUrl;
+        if (!demoUrl) {
+          console.error(
+            "Demo URL is required. Provide --demo-url or ensure the lead has a demoUrl field.",
+          );
+          process.exit(1);
+        }
+
+        const stage = options.stage as "initial" | "follow-up" | "final";
+        if (!["initial", "follow-up", "final"].includes(stage)) {
+          console.error(`Invalid stage "${options.stage}". Use: initial, follow-up, final`);
+          process.exit(1);
+        }
+
+        const email = generateOutreachEmail(lead, demoUrl, {
+          stage,
+          senderName: options.sender,
+          purchaseUrl: options.purchaseUrl,
+        });
+
+        console.log(`Subject: ${email.subject}\n`);
+        console.log(email.body);
+
+        // Try to copy to clipboard on macOS
+        try {
+          execSync("which pbcopy", { stdio: "ignore" });
+          execSync("pbcopy", {
+            input: `Subject: ${email.subject}\n\n${email.body}`,
+            stdio: ["pipe", "ignore", "ignore"],
+          });
+          console.log("\n(Copied to clipboard)");
+        } catch {
+          // pbcopy not available, skip clipboard
+        }
+      } catch (error) {
+        console.error(`Error: ${error instanceof Error ? error.message : String(error)}`);
+        process.exit(1);
+      }
+    },
+  );
 
 program.parse();

@@ -13,6 +13,7 @@
     "test:watch": "vitest",
     "find-leads": "tsx src/lead-finder/src/index.ts",
     "generate-site": "tsx src/site-generator/src/index.ts",
+    "create-purchase-link": "tsx src/purchase-flow/src/index.ts",
     "prepare": "lefthook install"
   },
   "engines": {
