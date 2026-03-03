@@ -6,7 +6,7 @@ pre-commit:
       run: pnpm lint {staged_files}
     format:
       glob: "*.{js,ts,tsx,mjs,json,md,yml,yaml,css}"
-      run: prettier --check {staged_files}
+      run: pnpm exec prettier --check {staged_files}
 
 pre-push:
   commands:

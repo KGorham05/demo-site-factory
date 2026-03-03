@@ -1,0 +1,93 @@
+---
+const navLinks = [
+  { label: "Home", href: "/" },
+  { label: "Services", href: "/services" },
+  { label: "About", href: "/about" },
+  { label: "Reviews", href: "/reviews" },
+  { label: "Contact", href: "/contact" },
+];
+---
+
+<header class="sticky top-0 z-50 bg-white shadow">
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+    <!-- Brand / Business Name -->
+    <a href="/" class="text-xl font-bold text-blue-900">
+      {"{{business_name}}"}
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="hidden items-center gap-6 md:flex">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class="text-sm font-medium text-gray-700 transition hover:text-blue-900"
+        >
+          {link.label}
+        </a>
+      ))}
+      <a
+        href="tel:{{phone}}"
+        class="rounded-lg bg-blue-900 px-5 py-2 text-sm font-semibold text-white transition hover:bg-blue-800"
+      >
+        Call {"{{phone}}"}
+      </a>
+    </nav>
+
+    <!-- Mobile Hamburger Button -->
+    <button
+      id="mobile-menu-button"
+      type="button"
+      class="inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-100 hover:text-blue-900 md:hidden"
+      aria-expanded="false"
+      aria-label="Toggle navigation menu"
+    >
+      <!-- Hamburger icon -->
+      <svg id="menu-icon-open" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+      </svg>
+      <!-- Close icon (hidden by default) -->
+      <svg id="menu-icon-close" class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile Menu (hidden by default) -->
+  <div id="mobile-menu" class="hidden border-t md:hidden">
+    <div class="space-y-1 px-6 pb-4 pt-2">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class="block rounded-md px-3 py-2 text-base font-medium text-gray-700 transition hover:bg-gray-100 hover:text-blue-900"
+        >
+          {link.label}
+        </a>
+      ))}
+      <a
+        href="tel:{{phone}}"
+        class="mt-2 block rounded-lg bg-blue-900 px-4 py-2 text-center text-sm font-semibold text-white transition hover:bg-blue-800"
+      >
+        Call {"{{phone}}"}
+      </a>
+    </div>
+  </div>
+</header>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const button = document.getElementById("mobile-menu-button");
+    const menu = document.getElementById("mobile-menu");
+    const iconOpen = document.getElementById("menu-icon-open");
+    const iconClose = document.getElementById("menu-icon-close");
+
+    if (button && menu && iconOpen && iconClose) {
+      button.addEventListener("click", () => {
+        const isExpanded = button.getAttribute("aria-expanded") === "true";
+        button.setAttribute("aria-expanded", String(!isExpanded));
+        menu.classList.toggle("hidden");
+        iconOpen.classList.toggle("hidden");
+        iconClose.classList.toggle("hidden");
+      });
+    }
+  });
+</script>

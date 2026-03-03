@@ -1,0 +1,64 @@
+---
+const navLinks = [
+  { label: "Home", href: "/" },
+  { label: "Services", href: "/services" },
+  { label: "About", href: "/about" },
+  { label: "Reviews", href: "/reviews" },
+  { label: "Contact", href: "/contact" },
+];
+---
+
+<footer class="bg-gray-900 text-white">
+  <div class="mx-auto max-w-6xl px-6 py-12">
+    <div class="grid gap-8 md:grid-cols-3">
+      <!-- Business Info -->
+      <div>
+        <h3 class="mb-4 text-lg font-bold">{"{{business_name}}"}</h3>
+        <div class="space-y-2 text-sm text-gray-400">
+          <p>{"{{address}}"}</p>
+          <p>{"{{city}}"}, {"{{state}}"} {"{{zip}}"}</p>
+          <p>
+            <a href="tel:{{phone}}" class="transition hover:text-white">
+              {"{{phone}}"}
+            </a>
+          </p>
+          <p>
+            <a href="mailto:{{email}}" class="transition hover:text-white">
+              {"{{email}}"}
+            </a>
+          </p>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <div>
+        <h3 class="mb-4 text-lg font-bold">Quick Links</h3>
+        <nav class="space-y-2">
+          {navLinks.map((link) => (
+            <a
+              href={link.href}
+              class="block text-sm text-gray-400 transition hover:text-white"
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
+      </div>
+
+      <!-- Business Hours -->
+      <div>
+        <h3 class="mb-4 text-lg font-bold">Business Hours</h3>
+        <div class="space-y-1 text-sm text-gray-400">
+          <p>Monday - Friday: 8:00 AM - 5:00 PM</p>
+          <p>Saturday: 9:00 AM - 2:00 PM</p>
+          <p>Sunday: Closed</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Copyright -->
+    <div class="mt-10 border-t border-gray-800 pt-6 text-center text-sm text-gray-500">
+      <p>&copy; 2026 {"{{business_name}}"}. All rights reserved.</p>
+    </div>
+  </div>
+</footer>

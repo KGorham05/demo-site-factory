@@ -11,8 +11,8 @@
     "format:check": "prettier --check .",
     "test": "vitest run",
     "test:watch": "vitest",
-    "find-leads": "pnpm --filter @demo-site-factory/lead-finder start",
-    "generate-site": "pnpm --filter @demo-site-factory/site-generator start",
+    "find-leads": "tsx src/lead-finder/src/index.ts",
+    "generate-site": "tsx src/site-generator/src/index.ts",
     "prepare": "lefthook install"
   },
   "engines": {
@@ -21,5 +21,15 @@
   },
   "packageManager": "pnpm@9.15.4",
   "author": "Kevin Gorham",
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.0.2",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.8.1",
+    "tsx": "^4.19.0",
+    "typescript": "^5.9.0",
+    "typescript-eslint": "^8.56.1",
+    "vitest": "^3.0.0"
+  }
 }

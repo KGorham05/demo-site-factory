@@ -7,16 +7,19 @@ English
 ## Review Priorities
 
 ### Critical (Must Fix)
+
 - Security vulnerabilities (injection, XSS, exposed secrets)
 - Correctness issues (logic errors, data loss risks)
 - Breaking changes to existing functionality
 
 ### Important (Should Fix)
+
 - Code quality (readability, maintainability, DRY)
 - Test coverage for new logic
 - Performance issues (unnecessary re-renders, N+1 queries, unbounded loops)
 
 ### Suggestions (Nice to Have)
+
 - Readability improvements
 - Better naming
 - Pattern consistency
@@ -24,7 +27,7 @@ English
 ## General Principles
 
 - Be specific — reference exact lines and suggest concrete fixes.
-- Provide context — explain *why* something is an issue, not just *what*.
+- Provide context — explain _why_ something is an issue, not just _what_.
 - Be constructive — suggest solutions, not just problems.
 
 ## Architecture Checks

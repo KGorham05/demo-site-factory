@@ -8,19 +8,18 @@ export default tseslint.config(
   prettier,
   {
     ignores: [
-      "node_modules/",
-      "dist/",
+      "**/node_modules/",
+      "**/dist/",
       "generated/",
-      ".astro/",
+      "**/.astro/",
       "coverage/",
+      "**/*.astro",
+      "pnpm-lock.yaml",
     ],
   },
   {
     rules: {
-      "@typescript-eslint/no-unused-vars": [
-        "error",
-        { argsIgnorePattern: "^_" },
-      ],
+      "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
       "@typescript-eslint/explicit-function-return-type": "off",
       "@typescript-eslint/no-explicit-any": "warn",
     },

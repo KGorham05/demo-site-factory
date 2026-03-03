@@ -13,17 +13,17 @@ Automated pipeline for generating demo websites for local businesses that don't 
 
 ## Tech Stack
 
-| Component | Technology |
-|-----------|------------|
-| Site templates | Astro + Tailwind CSS + TypeScript |
-| Interactive components | React (forms, galleries only) |
-| CLI tools | Node.js + TypeScript + Commander |
-| Lead finding | Google Places API |
-| Deployment | Vercel API |
-| Payments | Stripe |
-| Monorepo | pnpm workspaces |
-| Testing | Vitest |
-| Code quality | ESLint + Prettier + Lefthook |
+| Component              | Technology                        |
+| ---------------------- | --------------------------------- |
+| Site templates         | Astro + Tailwind CSS + TypeScript |
+| Interactive components | React (forms, galleries only)     |
+| CLI tools              | Node.js + TypeScript + Commander  |
+| Lead finding           | Google Places API                 |
+| Deployment             | Vercel API                        |
+| Payments               | Stripe                            |
+| Monorepo               | pnpm workspaces                   |
+| Testing                | Vitest                            |
+| Code quality           | ESLint + Prettier + Lefthook      |
 
 ## Project Structure
 
@@ -82,6 +82,7 @@ pnpm generate-site        # Run site generator CLI
 ## Business Data Schema
 
 Each lead/business is represented as a JSON object with fields like:
+
 - `name`, `phone`, `address`, `city`, `state`, `zip`
 - `industry`, `services` (array), `hours`
 - `placeId` (Google Places), `rating`, `reviewCount`

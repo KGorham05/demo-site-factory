@@ -3,12 +3,7 @@
  */
 
 /** Status of a business lead through the pipeline */
-export type LeadStatus =
-  | "lead"
-  | "demo_generated"
-  | "demo_sent"
-  | "purchased"
-  | "deployed";
+export type LeadStatus = "lead" | "demo_generated" | "demo_sent" | "purchased" | "deployed";
 
 /** A business lead from Google Places or manual entry */
 export interface BusinessLead {
