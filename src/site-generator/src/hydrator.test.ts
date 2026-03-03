@@ -246,14 +246,18 @@ describe("buildPlaceholderMap", () => {
     const extras: HydrationExtras = {
       purchaseUrls: {
         standard: "https://buy.stripe.com/standard",
+        standardDomain: "https://buy.stripe.com/standard-domain",
         premium: "https://buy.stripe.com/premium",
+        premiumDomain: "https://buy.stripe.com/premium-domain",
       },
       ownerEmail: "owner@business.com",
       ownerPhone: "(555) 999-0000",
     };
     const map = buildPlaceholderMap(sampleLead, extras);
     expect(map.purchase_url_standard).toBe("https://buy.stripe.com/standard");
+    expect(map.purchase_url_standard_domain).toBe("https://buy.stripe.com/standard-domain");
     expect(map.purchase_url_premium).toBe("https://buy.stripe.com/premium");
+    expect(map.purchase_url_premium_domain).toBe("https://buy.stripe.com/premium-domain");
     expect(map.owner_email).toBe("owner@business.com");
     expect(map.owner_phone).toBe("(555) 999-0000");
   });
@@ -261,8 +265,10 @@ describe("buildPlaceholderMap", () => {
   it("uses fallback defaults when extras are omitted", () => {
     const map = buildPlaceholderMap(sampleLead);
     expect(map.purchase_url_standard).toBe("#pricing");
+    expect(map.purchase_url_standard_domain).toBe("#pricing");
     expect(map.purchase_url_premium).toBe("#pricing");
-    expect(map.owner_email).toBe("kevin@example.com");
+    expect(map.purchase_url_premium_domain).toBe("#pricing");
+    expect(map.owner_email).toBe("kevin.gorham@gmail.com");
     expect(map.owner_phone).toBe("");
   });
 });

@@ -48,8 +48,10 @@ program
   .option("-t, --template <name>", "Template to use", "home-services")
   .option("-o, --output <path>", "Output directory", path.join(repoRoot(), "generated"))
   .option("--purchase-url-standard <url>", "Stripe checkout URL for Standard plan")
+  .option("--purchase-url-standard-domain <url>", "Stripe checkout URL for Standard + domain")
   .option("--purchase-url-premium <url>", "Stripe checkout URL for Premium plan")
-  .option("--owner-email <email>", "Owner contact email", "kevin@example.com")
+  .option("--purchase-url-premium-domain <url>", "Stripe checkout URL for Premium + domain")
+  .option("--owner-email <email>", "Owner contact email", "kevin.gorham@gmail.com")
   .option("--owner-phone <phone>", "Owner contact phone")
   .action(
     async (options: {
@@ -57,7 +59,9 @@ program
       template: string;
       output: string;
       purchaseUrlStandard?: string;
+      purchaseUrlStandardDomain?: string;
       purchaseUrlPremium?: string;
+      purchaseUrlPremiumDomain?: string;
       ownerEmail: string;
       ownerPhone?: string;
     }) => {
@@ -81,7 +85,9 @@ program
         if (options.purchaseUrlStandard || options.purchaseUrlPremium) {
           extras.purchaseUrls = {
             standard: options.purchaseUrlStandard ?? "#pricing",
+            standardDomain: options.purchaseUrlStandardDomain ?? "#pricing",
             premium: options.purchaseUrlPremium ?? "#pricing",
+            premiumDomain: options.purchaseUrlPremiumDomain ?? "#pricing",
           };
         }
 

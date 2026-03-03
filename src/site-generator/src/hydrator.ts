@@ -15,7 +15,12 @@ import { slugify } from "./slug.js";
 
 /** Extra data for purchase URLs and owner contact info */
 export interface HydrationExtras {
-  purchaseUrls?: { standard: string; premium: string };
+  purchaseUrls?: {
+    standard: string;
+    premium: string;
+    standardDomain?: string;
+    premiumDomain?: string;
+  };
   ownerEmail?: string;
   ownerPhone?: string;
 }
@@ -81,8 +86,10 @@ export function buildPlaceholderMap(
     rating: String(lead.rating ?? 4.8),
     review_count: String(lead.reviewCount ?? 50),
     purchase_url_standard: extras?.purchaseUrls?.standard ?? "#pricing",
+    purchase_url_standard_domain: extras?.purchaseUrls?.standardDomain ?? "#pricing",
     purchase_url_premium: extras?.purchaseUrls?.premium ?? "#pricing",
-    owner_email: extras?.ownerEmail ?? "kevin@example.com",
+    purchase_url_premium_domain: extras?.purchaseUrls?.premiumDomain ?? "#pricing",
+    owner_email: extras?.ownerEmail ?? "kevin.gorham@gmail.com",
     owner_phone: extras?.ownerPhone ?? "",
   };
 
