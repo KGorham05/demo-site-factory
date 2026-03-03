@@ -1,0 +1,52 @@
+[
+  {
+    "id": "security-plumbing-drains",
+    "placeId": "ChIJ77onWjx924ARkRKXf_GIQwU",
+    "name": "SECURITY PLUMBING & DRAINS",
+    "phone": "(760) 724-3795",
+    "address": "411 E Carmel St",
+    "city": "San Marcos",
+    "state": "CA",
+    "zip": "92078",
+    "industry": "plumber",
+    "services": [],
+    "hours": {
+      "sunday": {
+        "open": "7:00 AM",
+        "close": "3:00 PM"
+      },
+      "monday": {
+        "open": "12:00 AM",
+        "close": "12:00 AM"
+      }
+    },
+    "rating": 4.6,
+    "reviewCount": 98,
+    "status": "lead",
+    "foundAt": "2026-03-03T16:22:02.991Z",
+    "updatedAt": "2026-03-03T16:22:02.991Z"
+  },
+  {
+    "id": "ethan-brothers-plumbing-gas",
+    "placeId": "ChIJf-vsj1mL24ARF7ZYeHegnz0",
+    "name": "Ethan Brothers Plumbing & Gas",
+    "phone": "(442) 200-2110",
+    "address": "965 E Mission Rd",
+    "city": "San Marcos",
+    "state": "CA",
+    "zip": "92069",
+    "industry": "plumber",
+    "services": [],
+    "hours": {
+      "sunday": {
+        "open": "12:00 AM",
+        "close": "11:59 PM"
+      }
+    },
+    "rating": 4.8,
+    "reviewCount": 137,
+    "status": "lead",
+    "foundAt": "2026-03-03T16:22:02.995Z",
+    "updatedAt": "2026-03-03T16:22:02.995Z"
+  }
+]

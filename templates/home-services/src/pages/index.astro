@@ -2,91 +2,323 @@
 import BaseLayout from "../layouts/base-layout.astro";
 ---
 
-<BaseLayout title="Home - Professional Home Services">
+<BaseLayout title="{{business_name}} - Professional {{industry}} Services">
   <main>
-    <!-- Hero Section -->
-    <section class="bg-blue-900 py-20 text-white">
-      <div class="mx-auto max-w-5xl px-6 text-center">
-        <h1 class="mb-4 text-4xl font-bold md:text-5xl">
-          {{business_name}}
+    <!-- ==================== HERO SECTION ==================== -->
+    <section class="relative overflow-hidden bg-navy">
+      <!-- Gradient overlay for visual depth -->
+      <div class="absolute inset-0 bg-gradient-to-br from-navy via-navy-light to-navy opacity-90"></div>
+      <!-- Decorative circles -->
+      <div class="absolute -right-20 -top-20 h-80 w-80 rounded-full bg-copper/5"></div>
+      <div class="absolute -bottom-40 -left-20 h-96 w-96 rounded-full bg-copper/5"></div>
+
+      <div class="relative mx-auto max-w-7xl px-6 pb-20 pt-24 md:pb-28 md:pt-32">
+        <!-- Emergency Badge -->
+        <div class="mb-8">
+          <span class="inline-flex items-center gap-2 rounded-full border border-copper/40 bg-copper/10 px-4 py-1.5 text-sm font-medium text-copper">
+            <span class="h-2 w-2 rounded-full bg-copper"></span>
+            24/7 Emergency Service Available
+          </span>
+        </div>
+
+        <!-- Hero Heading -->
+        <h1 class="mb-6 max-w-3xl">
+          <span class="block font-['Playfair_Display'] text-5xl font-black text-white md:text-6xl lg:text-7xl">
+            Expert {"{{industry}}"}
+          </span>
+          <span class="block font-['Playfair_Display'] text-5xl font-black text-copper md:text-6xl lg:text-7xl">
+            You Can Trust
+          </span>
         </h1>
-        <p class="mb-8 text-xl text-blue-200">
-          {{tagline}}
+
+        <!-- Subtitle -->
+        <p class="mb-10 max-w-2xl text-lg text-gray-300 md:text-xl">
+          {"{{hero_subtitle}}"}
         </p>
-        <a
-          href="/contact"
-          class="inline-block rounded-lg bg-yellow-500 px-8 py-3 text-lg font-semibold text-gray-900 transition hover:bg-yellow-400"
-        >
-          Get a Free Estimate
-        </a>
-      </div>
-    </section>
 
-    <!-- Trust Signals -->
-    <section class="bg-gray-50 py-12">
-      <div class="mx-auto flex max-w-5xl flex-wrap justify-center gap-8 px-6 text-center">
-        <div>
-          <p class="text-3xl font-bold text-blue-900">Licensed</p>
-          <p class="text-gray-600">Fully licensed professionals</p>
-        </div>
-        <div>
-          <p class="text-3xl font-bold text-blue-900">Insured</p>
-          <p class="text-gray-600">Complete liability coverage</p>
-        </div>
-        <div>
-          <p class="text-3xl font-bold text-blue-900">{{years_in_business}}+ Years</p>
-          <p class="text-gray-600">Serving our community</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Services Overview -->
-    <section class="py-16">
-      <div class="mx-auto max-w-5xl px-6">
-        <h2 class="mb-10 text-center text-3xl font-bold">Our Services</h2>
-        <div class="grid gap-8 md:grid-cols-3">
-          <!-- Service cards will be generated from business.yaml -->
-          <div class="rounded-lg border p-6 text-center shadow-sm">
-            <h3 class="mb-2 text-xl font-semibold">{{service_1_name}}</h3>
-            <p class="text-gray-600">{{service_1_description}}</p>
-          </div>
-          <div class="rounded-lg border p-6 text-center shadow-sm">
-            <h3 class="mb-2 text-xl font-semibold">{{service_2_name}}</h3>
-            <p class="text-gray-600">{{service_2_description}}</p>
-          </div>
-          <div class="rounded-lg border p-6 text-center shadow-sm">
-            <h3 class="mb-2 text-xl font-semibold">{{service_3_name}}</h3>
-            <p class="text-gray-600">{{service_3_description}}</p>
-          </div>
-        </div>
-        <div class="mt-8 text-center">
-          <a href="/services" class="text-lg font-semibold text-blue-700 hover:underline">
-            View All Services &rarr;
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="bg-blue-900 py-16 text-white">
-      <div class="mx-auto max-w-3xl px-6 text-center">
-        <h2 class="mb-4 text-3xl font-bold">Ready to Get Started?</h2>
-        <p class="mb-8 text-lg text-blue-200">
-          Call us today or fill out our contact form for a free, no-obligation estimate.
-        </p>
-        <div class="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-          <a
-            href="tel:{{phone}}"
-            class="rounded-lg bg-yellow-500 px-8 py-3 text-lg font-semibold text-gray-900 transition hover:bg-yellow-400"
-          >
-            Call {{phone}}
-          </a>
+        <!-- CTA Buttons -->
+        <div class="flex flex-col gap-4 sm:flex-row">
           <a
             href="/contact"
-            class="rounded-lg border-2 border-white px-8 py-3 text-lg font-semibold transition hover:bg-white hover:text-blue-900"
+            class="inline-flex items-center justify-center gap-2 rounded-full bg-copper px-8 py-3.5 text-base font-semibold text-white transition hover:bg-copper-dark"
           >
-            Contact Us
+            Schedule Service
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+            </svg>
           </a>
+          <a
+            href="tel:{{phone}}"
+            class="inline-flex items-center justify-center gap-2 rounded-full border-2 border-copper px-8 py-3.5 text-base font-semibold text-copper transition hover:bg-copper/10"
+          >
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+            </svg>
+            Call Now
+          </a>
+        </div>
+
+        <!-- Stats Bar -->
+        <div class="mt-16 flex flex-col gap-8 border-t border-white/10 pt-8 sm:flex-row sm:gap-16">
+          <div>
+            <p class="font-['Playfair_Display'] text-3xl font-bold text-copper md:text-4xl">{"{{stats_years}}"}</p>
+            <p class="mt-1 text-sm text-gray-400">Years Experience</p>
+          </div>
+          <div>
+            <p class="font-['Playfair_Display'] text-3xl font-bold text-copper md:text-4xl">{"{{stats_jobs}}"}</p>
+            <p class="mt-1 text-sm text-gray-400">Jobs Completed</p>
+          </div>
+          <div>
+            <p class="font-['Playfair_Display'] text-3xl font-bold text-copper md:text-4xl">{"{{rating}}"}
+              <span class="text-copper">&#9733;</span>
+            </p>
+            <p class="mt-1 text-sm text-gray-400">Google Rating</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SERVICES SECTION ==================== -->
+    <section id="services" class="bg-gray-bg py-20 md:py-28">
+      <div class="mx-auto max-w-7xl px-6">
+        <!-- Section Header -->
+        <div class="mb-16 text-center">
+          <p class="mb-3 text-sm font-semibold uppercase tracking-widest text-copper">What We Do</p>
+          <h2 class="font-['Playfair_Display'] text-4xl font-black text-gray-900 md:text-5xl">Our Services</h2>
+          <p class="mx-auto mt-4 max-w-2xl text-lg text-gray-500">
+            From routine maintenance to emergency repairs, we deliver reliable solutions for all your needs.
+          </p>
+        </div>
+
+        <!-- Service Cards Grid -->
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <!-- Service 1: Wrench -->
+          <div class="rounded-xl border border-gray-200 bg-white p-8 transition hover:shadow-lg">
+            <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-[#FDF2E6]">
+              <svg class="h-6 w-6 text-copper" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75a4.5 4.5 0 01-4.884 4.484c-1.076-.091-2.264.071-2.95.904l-7.152 8.684a2.548 2.548 0 11-3.586-3.586l8.684-7.152c.833-.686.995-1.874.904-2.95a4.5 4.5 0 016.336-4.486l-3.276 3.276a3.004 3.004 0 002.25 2.25l3.276-3.276c.256.565.398 1.192.398 1.852z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.867 19.125h.008v.008h-.008v-.008z" />
+              </svg>
+            </div>
+            <h3 class="mb-2 text-lg font-bold text-gray-900">{"{{service_1_name}}"}</h3>
+            <p class="text-sm leading-relaxed text-gray-500">{"{{service_1_description}}"}</p>
+          </div>
+
+          <!-- Service 2: Water/Waves -->
+          <div class="rounded-xl border border-gray-200 bg-white p-8 transition hover:shadow-lg">
+            <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-[#FDF2E6]">
+              <svg class="h-6 w-6 text-copper" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+              </svg>
+            </div>
+            <h3 class="mb-2 text-lg font-bold text-gray-900">{"{{service_2_name}}"}</h3>
+            <p class="text-sm leading-relaxed text-gray-500">{"{{service_2_description}}"}</p>
+          </div>
+
+          <!-- Service 3: Flame (Water Heater) -->
+          <div class="rounded-xl border border-gray-200 bg-white p-8 transition hover:shadow-lg">
+            <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-[#FDF2E6]">
+              <svg class="h-6 w-6 text-copper" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 18a3.75 3.75 0 00.495-7.467 5.99 5.99 0 00-1.925 3.546 5.974 5.974 0 01-2.133-1.001A3.75 3.75 0 0012 18z" />
+              </svg>
+            </div>
+            <h3 class="mb-2 text-lg font-bold text-gray-900">{"{{service_3_name}}"}</h3>
+            <p class="text-sm leading-relaxed text-gray-500">{"{{service_3_description}}"}</p>
+          </div>
+
+          <!-- Service 4: Bath/Shower -->
+          <div class="rounded-xl border border-gray-200 bg-white p-8 transition hover:shadow-lg">
+            <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-[#FDF2E6]">
+              <svg class="h-6 w-6 text-copper" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h3 class="mb-2 text-lg font-bold text-gray-900">{"{{service_4_name}}"}</h3>
+            <p class="text-sm leading-relaxed text-gray-500">{"{{service_4_description}}"}</p>
+          </div>
+
+          <!-- Service 5: Pipe -->
+          <div class="rounded-xl border border-gray-200 bg-white p-8 transition hover:shadow-lg">
+            <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-[#FDF2E6]">
+              <svg class="h-6 w-6 text-copper" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
+              </svg>
+            </div>
+            <h3 class="mb-2 text-lg font-bold text-gray-900">{"{{service_5_name}}"}</h3>
+            <p class="text-sm leading-relaxed text-gray-500">{"{{service_5_description}}"}</p>
+          </div>
+
+          <!-- Service 6: House -->
+          <div class="rounded-xl border border-gray-200 bg-white p-8 transition hover:shadow-lg">
+            <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-[#FDF2E6]">
+              <svg class="h-6 w-6 text-copper" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+              </svg>
+            </div>
+            <h3 class="mb-2 text-lg font-bold text-gray-900">{"{{service_6_name}}"}</h3>
+            <p class="text-sm leading-relaxed text-gray-500">{"{{service_6_description}}"}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== WHY CHOOSE US SECTION ==================== -->
+    <section id="why-us" class="bg-navy py-20 md:py-28">
+      <div class="mx-auto max-w-7xl px-6">
+        <!-- Section Header -->
+        <div class="mb-16 text-center">
+          <p class="mb-3 text-sm font-semibold uppercase tracking-widest text-copper">Why Choose Us</p>
+          <h2 class="font-['Playfair_Display'] text-4xl font-black text-white md:text-5xl">Built on Trust</h2>
+          <p class="mx-auto mt-4 max-w-2xl text-lg text-gray-400">
+            We hold ourselves to the highest standards so you can have complete peace of mind.
+          </p>
+        </div>
+
+        <!-- Trust Pillars -->
+        <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+          <!-- Pillar 1: Licensed & Insured -->
+          <div class="text-center">
+            <div class="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-gray-600">
+              <svg class="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+              </svg>
+            </div>
+            <h3 class="mb-2 text-lg font-bold text-copper">Licensed &amp; Insured</h3>
+            <p class="text-sm leading-relaxed text-gray-400">Fully licensed, bonded, and insured for your complete protection and peace of mind.</p>
+          </div>
+
+          <!-- Pillar 2: On-Time, Every Time -->
+          <div class="text-center">
+            <div class="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-gray-600">
+              <svg class="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h3 class="mb-2 text-lg font-bold text-copper">On-Time, Every Time</h3>
+            <p class="text-sm leading-relaxed text-gray-400">We respect your time with punctual arrivals and efficient service delivery.</p>
+          </div>
+
+          <!-- Pillar 3: Satisfaction Guaranteed -->
+          <div class="text-center">
+            <div class="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-gray-600">
+              <svg class="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+              </svg>
+            </div>
+            <h3 class="mb-2 text-lg font-bold text-copper">Satisfaction Guaranteed</h3>
+            <p class="text-sm leading-relaxed text-gray-400">Your satisfaction is our top priority. We stand behind every job we complete.</p>
+          </div>
+
+          <!-- Pillar 4: Transparent Pricing -->
+          <div class="text-center">
+            <div class="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-gray-600">
+              <svg class="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.633 10.5c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 012.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 00.322-1.672V3a.75.75 0 01.75-.75A2.25 2.25 0 0116.5 4.5c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 01-2.649 7.521c-.388.482-.987.729-1.605.729H14.23c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 00-1.423-.23H5.904M14.25 9h2.25M5.904 18.75c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 01-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 10.203 4.167 9.75 5 9.75h1.053c.472 0 .745.556.5.96a8.958 8.958 0 00-1.302 4.665c0 1.194.232 2.333.654 3.375z" />
+              </svg>
+            </div>
+            <h3 class="mb-2 text-lg font-bold text-copper">Transparent Pricing</h3>
+            <p class="text-sm leading-relaxed text-gray-400">No hidden fees or surprise charges. You approve the price before we begin any work.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TESTIMONIALS SECTION ==================== -->
+    <section id="reviews" class="bg-white py-20 md:py-28">
+      <div class="mx-auto max-w-7xl px-6">
+        <!-- Section Header -->
+        <div class="mb-16 text-center">
+          <p class="mb-3 text-sm font-semibold uppercase tracking-widest text-copper">Testimonials</p>
+          <h2 class="font-['Playfair_Display'] text-4xl font-black text-gray-900 md:text-5xl">What Our Customers Say</h2>
+        </div>
+
+        <!-- Testimonial Cards -->
+        <div class="grid gap-8 md:grid-cols-3">
+          <!-- Testimonial 1 -->
+          <div class="rounded-xl border border-gray-200 bg-white p-8">
+            <div class="mb-4 flex gap-1">
+              <span class="text-xl text-copper">&#9733;</span>
+              <span class="text-xl text-copper">&#9733;</span>
+              <span class="text-xl text-copper">&#9733;</span>
+              <span class="text-xl text-copper">&#9733;</span>
+              <span class="text-xl text-copper">&#9733;</span>
+            </div>
+            <p class="mb-6 text-sm leading-relaxed text-gray-600">{"{{testimonial_1_text}}"}</p>
+            <p class="text-sm font-bold text-gray-900">{"{{testimonial_1_author}}"}</p>
+          </div>
+
+          <!-- Testimonial 2 -->
+          <div class="rounded-xl border border-gray-200 bg-white p-8">
+            <div class="mb-4 flex gap-1">
+              <span class="text-xl text-copper">&#9733;</span>
+              <span class="text-xl text-copper">&#9733;</span>
+              <span class="text-xl text-copper">&#9733;</span>
+              <span class="text-xl text-copper">&#9733;</span>
+              <span class="text-xl text-copper">&#9733;</span>
+            </div>
+            <p class="mb-6 text-sm leading-relaxed text-gray-600">{"{{testimonial_2_text}}"}</p>
+            <p class="text-sm font-bold text-gray-900">{"{{testimonial_2_author}}"}</p>
+          </div>
+
+          <!-- Testimonial 3 -->
+          <div class="rounded-xl border border-gray-200 bg-white p-8">
+            <div class="mb-4 flex gap-1">
+              <span class="text-xl text-copper">&#9733;</span>
+              <span class="text-xl text-copper">&#9733;</span>
+              <span class="text-xl text-copper">&#9733;</span>
+              <span class="text-xl text-copper">&#9733;</span>
+              <span class="text-xl text-copper">&#9733;</span>
+            </div>
+            <p class="mb-6 text-sm leading-relaxed text-gray-600">{"{{testimonial_3_text}}"}</p>
+            <p class="text-sm font-bold text-gray-900">{"{{testimonial_3_author}}"}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== CTA SECTION ==================== -->
+    <section class="bg-gray-bg py-20 md:py-28">
+      <div class="mx-auto max-w-5xl px-6">
+        <div class="relative overflow-hidden rounded-2xl bg-navy px-8 py-16 text-center md:px-16 md:py-20">
+          <!-- Decorative circles -->
+          <div class="absolute -left-10 -top-10 h-40 w-40 rounded-full bg-white/5"></div>
+          <div class="absolute -bottom-16 -right-16 h-56 w-56 rounded-full bg-white/5"></div>
+          <div class="absolute right-20 top-10 h-20 w-20 rounded-full bg-copper/10"></div>
+
+          <div class="relative">
+            <h2 class="mb-4 font-['Playfair_Display'] text-3xl font-black text-white md:text-4xl">
+              Ready to Get Started?
+            </h2>
+            <p class="mx-auto mb-10 max-w-xl text-lg text-gray-400">
+              Contact us today for a free estimate. No obligation, no pressure — just honest advice from real {"{{industry_lower}}"}s.
+            </p>
+
+            <!-- CTA Buttons -->
+            <div class="flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <a
+                href="/contact"
+                class="inline-flex items-center justify-center rounded-full bg-copper px-8 py-3.5 text-base font-semibold text-white transition hover:bg-copper-dark"
+              >
+                Request Free Estimate
+              </a>
+              <a
+                href="tel:{{phone}}"
+                class="inline-flex items-center justify-center gap-2 rounded-full border-2 border-copper px-8 py-3.5 text-base font-semibold text-copper transition hover:bg-copper/10"
+              >
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+                </svg>
+                {"{{phone}}"}
+              </a>
+            </div>
+
+            <!-- Contact info -->
+            <div class="mt-8 flex flex-col items-center gap-2 text-sm text-gray-400">
+              <a href="mailto:{{email}}" class="transition hover:text-copper">{"{{email}}"}</a>
+              <p>Serving the Greater {"{{city}}"} Area</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>

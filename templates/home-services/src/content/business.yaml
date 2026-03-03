@@ -10,9 +10,15 @@ city: "{{city}}"
 state: "{{state}}"
 zip: "{{zip}}"
 industry: "{{industry}}"
+industryLower: "{{industry_lower}}"
+
+# Hero section
+heroSubtitle: "{{hero_subtitle}}"
 
 # Trust signals
 yearsInBusiness: "{{years_in_business}}"
+statsYears: "{{stats_years}}"
+statsJobs: "{{stats_jobs}}"
 licensed: true
 insured: true
 bonded: true
@@ -25,6 +31,12 @@ services:
     description: "{{service_2_description}}"
   - name: "{{service_3_name}}"
     description: "{{service_3_description}}"
+  - name: "{{service_4_name}}"
+    description: "{{service_4_description}}"
+  - name: "{{service_5_name}}"
+    description: "{{service_5_description}}"
+  - name: "{{service_6_name}}"
+    description: "{{service_6_description}}"
 
 # Business hours
 hours:
@@ -45,4 +57,7 @@ testimonials:
     rating: 5
   - author: "{{testimonial_2_author}}"
     text: "{{testimonial_2_text}}"
+    rating: 5
+  - author: "{{testimonial_3_author}}"
+    text: "{{testimonial_3_text}}"
     rating: 5

@@ -44,6 +44,15 @@ export function buildPlaceholderMap(lead: BusinessLead): Record<string, string> 
   const defaults = getIndustryDefaults(lead.industry);
   const emailSlug = slugify(lead.name);
 
+  const yearsInBusiness = "10";
+  const industryName = formatIndustryName(lead.industry);
+
+  // Build hero subtitle from industry defaults template
+  const heroSubtitle = defaults.heroSubtitle
+    .replace("{City}", lead.city)
+    .replace("{Years}", yearsInBusiness)
+    .replace("{ServicePhrase}", defaults.servicePhrase);
+
   const map: Record<string, string> = {
     business_name: lead.name,
     phone: lead.phone ?? "",
@@ -52,15 +61,19 @@ export function buildPlaceholderMap(lead: BusinessLead): Record<string, string> 
     city: lead.city,
     state: lead.state,
     zip: lead.zip,
-    industry: formatIndustryName(lead.industry),
+    industry: industryName,
+    industry_lower: lead.industry.replace("-", " "),
     tagline: generateTagline(lead.industry, lead.city),
-    years_in_business: "10",
+    hero_subtitle: heroSubtitle,
+    years_in_business: yearsInBusiness,
+    stats_years: `${yearsInBusiness}+`,
+    stats_jobs: "1K+",
     rating: String(lead.rating ?? 4.8),
     review_count: String(lead.reviewCount ?? 50),
   };
 
   // Service placeholders: service_1_name, service_1_description, etc.
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 6; i++) {
     const num = i + 1;
     const serviceName = lead.services[i] ?? defaults.services[i]?.name ?? `Service ${num}`;
     const serviceDesc =
@@ -85,7 +98,7 @@ export function buildPlaceholderMap(lead: BusinessLead): Record<string, string> 
   }
 
   // Testimonial placeholders
-  for (let i = 0; i < 2; i++) {
+  for (let i = 0; i < 3; i++) {
     const num = i + 1;
     const testimonial = defaults.testimonials[i];
     map[`testimonial_${num}_author`] = testimonial?.author ?? `Customer ${num}`;

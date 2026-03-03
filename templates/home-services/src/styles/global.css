@@ -1,1 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&display=swap");
 @import "tailwindcss";
+
+@theme {
+  --color-navy: #1b2a4a;
+  --color-navy-light: #243656;
+  --color-copper: #c8884e;
+  --color-copper-dark: #b47a43;
+  --color-copper-light: #d4a373;
+  --color-gray-bg: #f0f2f5;
+}

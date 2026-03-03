@@ -90,8 +90,10 @@ describe("industry defaults", () => {
       expect(defaults).toBeDefined();
       expect(defaults.displayName).toBeTruthy();
       expect(defaults.taglineTemplate).toContain("{City}");
-      expect(defaults.services.length).toBeGreaterThanOrEqual(3);
-      expect(defaults.testimonials.length).toBeGreaterThanOrEqual(2);
+      expect(defaults.services.length).toBeGreaterThanOrEqual(6);
+      expect(defaults.testimonials.length).toBeGreaterThanOrEqual(3);
+      expect(defaults.heroSubtitle).toBeTruthy();
+      expect(defaults.servicePhrase).toBeTruthy();
     }
   });
 
@@ -165,8 +167,13 @@ describe("buildPlaceholderMap", () => {
     expect(map.state).toBe("CO");
     expect(map.zip).toBe("80202");
     expect(map.industry).toBe("Plumbing");
+    expect(map.industry_lower).toBe("plumber");
     expect(map.tagline).toBe("Denver's Trusted Plumbing Experts");
+    expect(map.hero_subtitle).toContain("Denver");
+    expect(map.hero_subtitle).toContain("plumbing");
     expect(map.years_in_business).toBe("10");
+    expect(map.stats_years).toBe("10+");
+    expect(map.stats_jobs).toBe("1K+");
     expect(map.rating).toBe("4.7");
     expect(map.review_count).toBe("42");
   });
@@ -178,6 +185,16 @@ describe("buildPlaceholderMap", () => {
     expect(map.service_3_name).toBe("Water Heater Installation");
   });
 
+  it("generates service_4, service_5, service_6 from industry defaults", () => {
+    const map = buildPlaceholderMap(sampleLead);
+    expect(map.service_4_name).toBeTruthy();
+    expect(map.service_4_description).toBeTruthy();
+    expect(map.service_5_name).toBeTruthy();
+    expect(map.service_5_description).toBeTruthy();
+    expect(map.service_6_name).toBeTruthy();
+    expect(map.service_6_description).toBeTruthy();
+  });
+
   it("falls back to industry defaults when services are missing", () => {
     const leadNoServices: BusinessLead = {
       ...sampleLead,
@@ -185,7 +202,7 @@ describe("buildPlaceholderMap", () => {
     };
     const map = buildPlaceholderMap(leadNoServices);
     // Should fall back to default plumber services
-    expect(map.service_1_name).toBe("Emergency Plumbing Repair");
+    expect(map.service_1_name).toBe("Repairs & Maintenance");
     expect(map.service_1_description).toBeTruthy();
   });
 
@@ -206,6 +223,8 @@ describe("buildPlaceholderMap", () => {
     expect(map.testimonial_1_text).toBeTruthy();
     expect(map.testimonial_2_author).toBeTruthy();
     expect(map.testimonial_2_text).toBeTruthy();
+    expect(map.testimonial_3_author).toBeTruthy();
+    expect(map.testimonial_3_text).toBeTruthy();
   });
 
   it("uses empty string for phone when not provided", () => {

@@ -1,64 +1,37 @@
 ---
 const navLinks = [
-  { label: "Home", href: "/" },
-  { label: "Services", href: "/services" },
-  { label: "About", href: "/about" },
-  { label: "Reviews", href: "/reviews" },
+  { label: "Services", href: "/#services" },
+  { label: "Why Us", href: "/#why-us" },
+  { label: "Reviews", href: "/#reviews" },
   { label: "Contact", href: "/contact" },
 ];
 ---
 
-<footer class="bg-gray-900 text-white">
-  <div class="mx-auto max-w-6xl px-6 py-12">
-    <div class="grid gap-8 md:grid-cols-3">
-      <!-- Business Info -->
-      <div>
-        <h3 class="mb-4 text-lg font-bold">{"{{business_name}}"}</h3>
-        <div class="space-y-2 text-sm text-gray-400">
-          <p>{"{{address}}"}</p>
-          <p>{"{{city}}"}, {"{{state}}"} {"{{zip}}"}</p>
-          <p>
-            <a href="tel:{{phone}}" class="transition hover:text-white">
-              {"{{phone}}"}
-            </a>
-          </p>
-          <p>
-            <a href="mailto:{{email}}" class="transition hover:text-white">
-              {"{{email}}"}
-            </a>
-          </p>
-        </div>
-      </div>
+<footer class="bg-navy">
+  <div class="mx-auto flex max-w-7xl flex-col items-center gap-4 px-6 py-6 md:flex-row md:justify-between">
+    <!-- Logo + Business Name -->
+    <a href="/" class="flex items-center gap-3">
+      <span class="flex h-8 w-8 items-center justify-center rounded-full bg-copper text-sm font-bold text-white">
+        {"{{business_name}}".charAt(0)}
+      </span>
+      <span class="text-sm font-bold text-white">{"{{business_name}}"}</span>
+    </a>
 
-      <!-- Navigation Links -->
-      <div>
-        <h3 class="mb-4 text-lg font-bold">Quick Links</h3>
-        <nav class="space-y-2">
-          {navLinks.map((link) => (
-            <a
-              href={link.href}
-              class="block text-sm text-gray-400 transition hover:text-white"
-            >
-              {link.label}
-            </a>
-          ))}
-        </nav>
-      </div>
-
-      <!-- Business Hours -->
-      <div>
-        <h3 class="mb-4 text-lg font-bold">Business Hours</h3>
-        <div class="space-y-1 text-sm text-gray-400">
-          <p>Monday - Friday: 8:00 AM - 5:00 PM</p>
-          <p>Saturday: 9:00 AM - 2:00 PM</p>
-          <p>Sunday: Closed</p>
-        </div>
-      </div>
-    </div>
+    <!-- Nav Links -->
+    <nav class="flex items-center gap-6">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class="text-sm text-gray-400 transition hover:text-white"
+        >
+          {link.label}
+        </a>
+      ))}
+    </nav>
 
     <!-- Copyright -->
-    <div class="mt-10 border-t border-gray-800 pt-6 text-center text-sm text-gray-500">
-      <p>&copy; 2026 {"{{business_name}}"}. All rights reserved.</p>
-    </div>
+    <p class="text-sm text-gray-500">
+      &copy; 2026 {"{{business_name}}"}. All rights reserved.
+    </p>
   </div>
 </footer>

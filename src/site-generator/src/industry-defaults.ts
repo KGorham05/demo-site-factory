@@ -11,6 +11,10 @@ export interface IndustryDefaults {
   displayName: string;
   /** Tagline template - use {City} and {Industry} as placeholders */
   taglineTemplate: string;
+  /** Hero subtitle template - use {City}, {Industry}, {Years}, {ServicePhrase} */
+  heroSubtitle: string;
+  /** Short phrase describing service range (e.g., "leaky faucets to full remodels") */
+  servicePhrase: string;
   /** Default services with descriptions */
   services: ServiceDefault[];
   /** Placeholder testimonial templates */
@@ -31,21 +35,39 @@ const INDUSTRY_MAP: Record<Industry, IndustryDefaults> = {
   plumber: {
     displayName: "Plumbing",
     taglineTemplate: "{City}'s Trusted Plumbing Experts",
+    heroSubtitle:
+      "Licensed & insured plumbing professionals serving {City} and surrounding areas for over {Years} years. From leaky faucets to full remodels — we do it all.",
+    servicePhrase: "leaky faucets to full remodels",
     services: [
       {
-        name: "Emergency Plumbing Repair",
+        name: "Repairs & Maintenance",
         description:
-          "Fast, reliable emergency plumbing services available when you need them most. We handle burst pipes, major leaks, and sewage backups with urgency and professionalism.",
+          "Fast, reliable plumbing repairs for leaky faucets, running toilets, and everything in between. We keep your home's plumbing running smoothly.",
       },
       {
-        name: "Drain Cleaning & Unclogging",
+        name: "Drain Cleaning",
         description:
           "Professional drain cleaning to restore full flow to your sinks, showers, and main sewer lines. We use advanced equipment to clear even the toughest blockages.",
       },
       {
-        name: "Water Heater Installation & Repair",
+        name: "Water Heater Services",
         description:
-          "Expert installation and repair of tank and tankless water heaters. We help you choose the right system for your home and budget.",
+          "Expert installation, repair, and maintenance of tank and tankless water heaters. We help you choose the right system for your home and budget.",
+      },
+      {
+        name: "Bathroom Remodeling",
+        description:
+          "Transform your bathroom with updated fixtures, modern tile, and improved layouts. We handle every detail from design to final installation.",
+      },
+      {
+        name: "Pipe Replacement",
+        description:
+          "Complete pipe replacement and repiping services for aging or damaged plumbing. We use durable, long-lasting materials to protect your home for decades.",
+      },
+      {
+        name: "New Construction",
+        description:
+          "Full-service plumbing for new builds and major renovations. From rough-in to finish, our licensed plumbers ensure code-compliant, reliable installations.",
       },
     ],
     testimonials: [
@@ -57,11 +79,18 @@ const INDUSTRY_MAP: Record<Industry, IndustryDefaults> = {
         author: "James R.",
         text: "We had a major pipe burst on a Sunday evening and they were at our door within 30 minutes. Saved us from serious water damage. These guys are the best!",
       },
+      {
+        author: "Angela T.",
+        text: "Had our entire bathroom remodeled and the plumbing work was flawless. On time, on budget, and the team was a pleasure to work with.",
+      },
     ],
   },
   electrician: {
     displayName: "Electrical",
     taglineTemplate: "{City}'s Trusted Electrical Experts",
+    heroSubtitle:
+      "Licensed & insured electrical professionals serving {City} and surrounding areas for over {Years} years. From panel upgrades to smart home wiring — we do it all.",
+    servicePhrase: "panel upgrades to smart home wiring",
     services: [
       {
         name: "Electrical Panel Upgrades",
@@ -78,6 +107,21 @@ const INDUSTRY_MAP: Record<Industry, IndustryDefaults> = {
         description:
           "Transform your home with professional lighting installation. From recessed lights to outdoor landscape lighting, we bring your vision to life.",
       },
+      {
+        name: "EV Charger Installation",
+        description:
+          "Professional electric vehicle charger installation for your home. We handle permitting, wiring, and setup so you can charge conveniently in your garage.",
+      },
+      {
+        name: "Generator Installation",
+        description:
+          "Keep your home powered during outages with a professionally installed standby generator. We size, install, and maintain systems for whole-home backup.",
+      },
+      {
+        name: "Smoke & Carbon Monoxide Detectors",
+        description:
+          "Ensure your family's safety with properly installed and connected smoke and carbon monoxide detectors. We bring your home up to current code requirements.",
+      },
     ],
     testimonials: [
       {
@@ -88,11 +132,18 @@ const INDUSTRY_MAP: Record<Industry, IndustryDefaults> = {
         author: "Tom W.",
         text: "Professional, punctual, and reasonably priced. They installed recessed lighting throughout our home and it looks amazing.",
       },
+      {
+        author: "Rachel S.",
+        text: "Had an EV charger installed in our garage and the whole process was seamless. They handled the permit and everything. Highly recommend!",
+      },
     ],
   },
   hvac: {
     displayName: "HVAC",
     taglineTemplate: "{City}'s Trusted HVAC Experts",
+    heroSubtitle:
+      "Licensed & insured HVAC professionals serving {City} and surrounding areas for over {Years} years. From AC installs to furnace repairs — we do it all.",
+    servicePhrase: "AC installs to furnace repairs",
     services: [
       {
         name: "AC Installation & Replacement",
@@ -109,6 +160,21 @@ const INDUSTRY_MAP: Record<Industry, IndustryDefaults> = {
         description:
           "Extend the life of your HVAC system with regular maintenance. Our tune-up service improves efficiency and prevents costly breakdowns.",
       },
+      {
+        name: "Duct Cleaning & Sealing",
+        description:
+          "Improve indoor air quality and system efficiency with professional duct cleaning and sealing. We remove dust, debris, and seal leaks for optimal airflow.",
+      },
+      {
+        name: "Heat Pump Services",
+        description:
+          "Energy-efficient heat pump installation, repair, and maintenance. We help you save on energy costs while keeping your home comfortable year-round.",
+      },
+      {
+        name: "Indoor Air Quality",
+        description:
+          "Breathe easier with our indoor air quality solutions including air purifiers, humidifiers, and ventilation systems tailored to your home.",
+      },
     ],
     testimonials: [
       {
@@ -119,11 +185,18 @@ const INDUSTRY_MAP: Record<Industry, IndustryDefaults> = {
         author: "Mike P.",
         text: "Our furnace stopped working on the coldest night of the year. They came out at 10 PM and had it running again in no time. True professionals.",
       },
+      {
+        author: "Susan L.",
+        text: "Had our ducts cleaned and sealed and noticed an immediate difference in air quality and our energy bill. Wish we had done this sooner!",
+      },
     ],
   },
   landscaping: {
     displayName: "Landscaping",
     taglineTemplate: "{City}'s Trusted Landscaping Experts",
+    heroSubtitle:
+      "Licensed & insured landscaping professionals serving {City} and surrounding areas for over {Years} years. From lawn care to full outdoor renovations — we do it all.",
+    servicePhrase: "lawn care to full outdoor renovations",
     services: [
       {
         name: "Lawn Care & Maintenance",
@@ -140,6 +213,21 @@ const INDUSTRY_MAP: Record<Industry, IndustryDefaults> = {
         description:
           "Professional tree trimming, pruning, and removal services. We keep your trees healthy and your property safe.",
       },
+      {
+        name: "Irrigation Systems",
+        description:
+          "Custom sprinkler and drip irrigation design, installation, and repair. We keep your landscape watered efficiently and your water bill low.",
+      },
+      {
+        name: "Hardscaping & Patios",
+        description:
+          "Beautiful patios, walkways, retaining walls, and outdoor living spaces built with quality materials and expert craftsmanship.",
+      },
+      {
+        name: "Seasonal Cleanup",
+        description:
+          "Comprehensive spring and fall cleanup services including leaf removal, bed preparation, mulching, and winterization to keep your property looking great year-round.",
+      },
     ],
     testimonials: [
       {
@@ -150,11 +238,18 @@ const INDUSTRY_MAP: Record<Industry, IndustryDefaults> = {
         author: "David L.",
         text: "Reliable weekly lawn service that keeps our yard looking pristine. They are always on time and do a thorough job every visit.",
       },
+      {
+        author: "Maria G.",
+        text: "They installed a beautiful patio and irrigation system for us. The whole yard feels like a retreat now. Outstanding work!",
+      },
     ],
   },
   cleaning: {
     displayName: "Cleaning",
     taglineTemplate: "{City}'s Trusted Cleaning Experts",
+    heroSubtitle:
+      "Licensed & insured cleaning professionals serving {City} and surrounding areas for over {Years} years. From deep cleans to recurring service — we do it all.",
+    servicePhrase: "deep cleans to recurring service",
     services: [
       {
         name: "Residential Deep Cleaning",
@@ -171,6 +266,21 @@ const INDUSTRY_MAP: Record<Industry, IndustryDefaults> = {
         description:
           "Make your move stress-free with our detailed move-in or move-out cleaning service. We leave the space sparkling for the next chapter.",
       },
+      {
+        name: "Office & Commercial Cleaning",
+        description:
+          "Professional cleaning for offices, retail spaces, and commercial properties. We keep your workspace clean, healthy, and inviting for employees and customers.",
+      },
+      {
+        name: "Carpet & Upholstery Cleaning",
+        description:
+          "Deep carpet and upholstery cleaning that removes stains, allergens, and odors. We use professional-grade equipment for a thorough, lasting clean.",
+      },
+      {
+        name: "Post-Construction Cleaning",
+        description:
+          "Detailed cleanup after renovations or new construction. We remove dust, debris, and residue so your space is move-in ready.",
+      },
     ],
     testimonials: [
       {
@@ -181,11 +291,18 @@ const INDUSTRY_MAP: Record<Industry, IndustryDefaults> = {
         author: "Robert A.",
         text: "We use their bi-weekly service and it is worth every penny. Coming home to a clean house is the best feeling. Highly recommend!",
       },
+      {
+        author: "Emily R.",
+        text: "Hired them for a post-construction cleanup and they were incredible. Every surface was spotless. Would not hesitate to call them again.",
+      },
     ],
   },
   roofing: {
     displayName: "Roofing",
     taglineTemplate: "{City}'s Trusted Roofing Experts",
+    heroSubtitle:
+      "Licensed & insured roofing professionals serving {City} and surrounding areas for over {Years} years. From repairs to full replacements — we do it all.",
+    servicePhrase: "repairs to full replacements",
     services: [
       {
         name: "Roof Replacement",
@@ -202,6 +319,21 @@ const INDUSTRY_MAP: Record<Industry, IndustryDefaults> = {
         description:
           "Comprehensive roof inspections to assess condition and identify potential issues. Get a detailed report and honest recommendations.",
       },
+      {
+        name: "Gutter Installation & Repair",
+        description:
+          "Protect your home's foundation with professionally installed gutters and downspouts. We also repair and clean existing gutter systems.",
+      },
+      {
+        name: "Storm Damage Restoration",
+        description:
+          "Fast response to storm damage including emergency tarping, insurance claim assistance, and full restoration to get your home protected again.",
+      },
+      {
+        name: "Flat Roof Systems",
+        description:
+          "Specialized flat roof installation and repair for commercial and residential properties. We work with TPO, EPDM, and modified bitumen systems.",
+      },
     ],
     testimonials: [
       {
@@ -212,11 +344,18 @@ const INDUSTRY_MAP: Record<Industry, IndustryDefaults> = {
         author: "Steven N.",
         text: "After a hailstorm damaged our roof, they handled the insurance claim and repairs seamlessly. Professional from start to finish.",
       },
+      {
+        author: "Janet P.",
+        text: "Great experience from inspection to completion. They found issues our previous roofer missed and fixed everything at a fair price.",
+      },
     ],
   },
   painting: {
     displayName: "Painting",
     taglineTemplate: "{City}'s Trusted Painting Experts",
+    heroSubtitle:
+      "Licensed & insured painting professionals serving {City} and surrounding areas for over {Years} years. From interior refreshes to full exterior makeovers — we do it all.",
+    servicePhrase: "interior refreshes to full exterior makeovers",
     services: [
       {
         name: "Interior Painting",
@@ -233,6 +372,21 @@ const INDUSTRY_MAP: Record<Industry, IndustryDefaults> = {
         description:
           "Give your kitchen a fresh look without the cost of replacement. Our cabinet refinishing service delivers a factory-quality finish.",
       },
+      {
+        name: "Deck & Fence Staining",
+        description:
+          "Protect and beautify your outdoor wood surfaces with professional staining and sealing. We restore decks, fences, and pergolas to like-new condition.",
+      },
+      {
+        name: "Wallpaper Removal & Installation",
+        description:
+          "Expert wallpaper removal without damage to your walls, plus professional installation of new wallpaper and wall coverings for a fresh look.",
+      },
+      {
+        name: "Color Consultation",
+        description:
+          "Not sure which colors to choose? Our professional color consultation helps you select the perfect palette for your home's style and lighting.",
+      },
     ],
     testimonials: [
       {
@@ -243,11 +397,18 @@ const INDUSTRY_MAP: Record<Industry, IndustryDefaults> = {
         author: "Mark G.",
         text: "Our house exterior looks brand new. They did an incredible job with prep work and the paint job is flawless. Will definitely use them again.",
       },
+      {
+        author: "Tina V.",
+        text: "The color consultation was a game-changer. They helped us pick the perfect shades and the finished result is absolutely beautiful.",
+      },
     ],
   },
   "pest-control": {
     displayName: "Pest Control",
     taglineTemplate: "{City}'s Trusted Pest Control Experts",
+    heroSubtitle:
+      "Licensed & insured pest control professionals serving {City} and surrounding areas for over {Years} years. From ants to termites — we do it all.",
+    servicePhrase: "ants to termites",
     services: [
       {
         name: "General Pest Treatment",
@@ -264,6 +425,21 @@ const INDUSTRY_MAP: Record<Industry, IndustryDefaults> = {
         description:
           "Effective rodent removal and exclusion services. We seal entry points, set traps, and implement prevention strategies to keep mice and rats out.",
       },
+      {
+        name: "Mosquito & Tick Control",
+        description:
+          "Reclaim your yard with professional mosquito and tick treatments. We apply barrier sprays and targeted solutions to keep biting pests at bay.",
+      },
+      {
+        name: "Bed Bug Treatment",
+        description:
+          "Thorough bed bug elimination using heat treatment and targeted applications. We inspect, treat, and follow up to ensure complete eradication.",
+      },
+      {
+        name: "Wildlife Removal",
+        description:
+          "Humane removal of raccoons, squirrels, bats, and other wildlife from your home. We relocate animals safely and seal entry points to prevent return.",
+      },
     ],
     testimonials: [
       {
@@ -274,11 +450,18 @@ const INDUSTRY_MAP: Record<Industry, IndustryDefaults> = {
         author: "Chris B.",
         text: "Professional and thorough. They found a termite issue we did not even know about and treated it before it caused major damage. Saved us thousands.",
       },
+      {
+        author: "Kelly D.",
+        text: "Called them for a mosquito problem in our backyard and the difference after treatment was night and day. We can actually enjoy our patio again!",
+      },
     ],
   },
   handyman: {
     displayName: "Handyman",
     taglineTemplate: "{City}'s Trusted Handyman Experts",
+    heroSubtitle:
+      "Licensed & insured handyman professionals serving {City} and surrounding areas for over {Years} years. From small repairs to big projects — we do it all.",
+    servicePhrase: "small repairs to big projects",
     services: [
       {
         name: "Home Repairs",
@@ -295,6 +478,21 @@ const INDUSTRY_MAP: Record<Industry, IndustryDefaults> = {
         description:
           "Expert drywall repair, patching, and finishing. We fix holes, cracks, and water damage to restore your walls to perfect condition.",
       },
+      {
+        name: "Door & Window Installation",
+        description:
+          "Professional installation and replacement of interior and exterior doors, windows, and hardware. We ensure a perfect fit and smooth operation.",
+      },
+      {
+        name: "Tile & Flooring Repair",
+        description:
+          "Fix cracked tiles, replace damaged flooring, and install new surfaces. We work with ceramic, vinyl, laminate, and hardwood to restore your floors.",
+      },
+      {
+        name: "Pressure Washing",
+        description:
+          "Restore your home's exterior, driveway, deck, and patio with professional pressure washing. We remove dirt, mildew, and stains for a fresh look.",
+      },
     ],
     testimonials: [
       {
@@ -305,11 +503,18 @@ const INDUSTRY_MAP: Record<Industry, IndustryDefaults> = {
         author: "Brian J.",
         text: "Reliable, honest, and skilled. They have become our go-to for anything that needs fixing around the house. Can not recommend them enough.",
       },
+      {
+        author: "Paul E.",
+        text: "They installed a new front door and repaired our deck railing in the same visit. Great quality work and very reasonable pricing.",
+      },
     ],
   },
   "general-contractor": {
     displayName: "General Contracting",
     taglineTemplate: "{City}'s Trusted General Contracting Experts",
+    heroSubtitle:
+      "Licensed & insured general contracting professionals serving {City} and surrounding areas for over {Years} years. From kitchen remodels to home additions — we do it all.",
+    servicePhrase: "kitchen remodels to home additions",
     services: [
       {
         name: "Kitchen Remodeling",
@@ -326,6 +531,21 @@ const INDUSTRY_MAP: Record<Industry, IndustryDefaults> = {
         description:
           "Expand your living space with a professionally built home addition. We manage the entire project from permits to final walkthrough.",
       },
+      {
+        name: "Basement Finishing",
+        description:
+          "Turn your unfinished basement into valuable living space. We handle framing, electrical, plumbing, flooring, and finishing for a complete transformation.",
+      },
+      {
+        name: "Deck & Porch Construction",
+        description:
+          "Custom deck and porch design and construction using premium materials. We build outdoor living spaces that enhance your home's value and enjoyment.",
+      },
+      {
+        name: "Whole-Home Renovation",
+        description:
+          "Comprehensive renovation services that transform your entire home. We coordinate all trades and manage every detail from demolition to final walkthrough.",
+      },
     ],
     testimonials: [
       {
@@ -335,6 +555,10 @@ const INDUSTRY_MAP: Record<Industry, IndustryDefaults> = {
       {
         author: "Greg H.",
         text: "Built a beautiful addition to our home. The crew was professional, clean, and communicative throughout the entire project. Could not be happier.",
+      },
+      {
+        author: "Monica J.",
+        text: "They finished our basement and it is now our favorite room in the house. Incredible attention to detail and the project was completed on schedule.",
       },
     ],
   },
